@@ -1,0 +1,20 @@
+pipeline {
+    agent any
+    environment {
+        GIT_REPO = 'https://github.com/RomanStrazzanti/Exercice-Test-Unitaire.git' // Remplacez par votre URL GitHub
+        GIT_BRANCH = 'main' // Branche à surveiller
+    }
+    stages {
+        stage('Check for Changes') {
+            steps {
+                script {
+                    echo "Cloning the repository to check for changes..."
+                    checkout([$class: 'GitSCM', 
+                              branches: [[name: "${GIT_BRANCH}"]],
+                              userRemoteConfigs: [[url: "${GIT_REPO}"]]])
+                    echo "Le dépôt a été modifié."
+                }
+            }
+        }
+    }
+}
